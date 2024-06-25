@@ -14,27 +14,6 @@ def readNewsDate(term: str, language:str ='pt', region:str ='BR', pag_limit:int=
   #print(googlenews.get_texts())
   print(googlenews.results())
   return googlenews.results()
-
-def listNewsToDataSpark(list_data:list, spark_session):
-  main_list=[]
-  del_columns = ['desc', 'datetime', 'site']
-  for dict_data in list_data:
-    list_element = [v for k, v in dict_data.items() if k not in del_columns]
-    main_list.append(list_element)
-
-  columns = ['title', 'date', 'link', 'img', 'media', 'reporter']
-  schema = StructType([
-    StructField('title', StringType(), True),
-    StructField('date', StringType(), True),
-    StructField('link', StringType(), True),
-    StructField('img', StringType(), True),
-    StructField('media', StringType(), True),
-    StructField('reporter', StringType(), True)
-  ])
-  df_data = spark_session.createDataFrame(main_list, schema)
-  return df_data
-
-
 def listNewsToDataPandas(list_data:list):
   main_list=[]
   del_columns = ['desc', 'datetime', 'site']
@@ -54,10 +33,6 @@ def listNewsToDataPandas(list_data:list):
 
   df_data = pd.DataFrame(main_list, columns=columns)
   return df_data
-
-def saveDataframeToParquet(df_data, output_path):
-  df_data.write.mode("overwrite").parquet(output_path)
-  print(f"Data saved to {output_path}")
 
 
 list_stocks = [
@@ -143,8 +118,6 @@ list_stocks = [
     ["SANB11", "SANTANDER"],
 ]
 today = date.today()
-# Create a Spark session
-#spark = SparkSession.builder.appName("API to Parquet").getOrCreate()
 index_initial=0
 
 for stock in list_stocks:
@@ -152,7 +125,5 @@ for stock in list_stocks:
   output_extrated_data_path = f"gs://python_files_stock/outputs_extracted_data/{stock[0]}/{today}"
   list_news = readNewsDate(term =stock[0])
   df_news = listNewsToDataPandas(list_news)
-  #df_news.to_parquet(output_extrated_data_path)
-  #df_news = listNewsToDataSpark(list_news, spark)
-  #saveDataframeToParquet(df_news, output_extrated_data_path)
-  #df_news.unpersist()
+  df_news.to_parquet(output_extrated_data_path)
+
