@@ -1,40 +1,19 @@
-from pyspark.sql import SparkSession
-from pyspark.sql.types import StructType, StructField, StringType, IntegerType
 from datetime import date
-import time
+
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import lit, concat_ws, col
+from pyspark.sql.functions import input_file_name, udf
+from pyspark.sql.types import StringType, StructType, StructField
 import pandas as pd
-from GoogleNews import GoogleNews
+import re
 
+# Initialize a SparkSession
+spark = SparkSession.builder \
+    .appName("ReadParquetFromGCS") \
+    .master("local[*]") \
+    .getOrCreate()
 
-def readNewsDate(term: str, language:str ='pt', region:str ='BR', pag_limit:int=10):
-  googlenews = GoogleNews(lang=language, region=region)
-  googlenews.get_news(term)
-  googlenews.set_time_range('01/01/2023','25/06/2024')
-  #googlenews.get_page(pag_limit)
-  #print(googlenews.get_texts())
-  print(googlenews.results())
-  return googlenews.results()
-def listNewsToDataPandas(list_data:list):
-  main_list=[]
-  del_columns = ['desc', 'datetime', 'site']
-  for dict_data in list_data:
-    list_element = [v for k, v in dict_data.items() if k not in del_columns]
-    main_list.append(list_element)
-
-  columns = ['title', 'date', 'link', 'img', 'media', 'reporter']
-  schema = StructType([
-    StructField('title', StringType(), True),
-    StructField('date', StringType(), True),
-    StructField('link', StringType(), True),
-    StructField('img', StringType(), True),
-    StructField('media', StringType(), True),
-    StructField('reporter', StringType(), True)
-  ])
-
-  df_data = pd.DataFrame(main_list, columns=columns)
-  return df_data
-
-
+stock = 'ABEV3'
 list_stocks = [
     ["RRRP3", "3R PETROLEUM"],
     ["ALOS3", "ALLOS"],
@@ -118,12 +97,24 @@ list_stocks = [
     ["SANB11", "SANTANDER"],
 ]
 today = date.today()
-index_initial=0
+# Define the path to the Parquet files in GCS
+#parquet_path = r"C:\Users\Ruan Lucas Donino\Downloads\outputs_extracted_data_ABEV3_2024-06-27_ABEV3-2024-06-27"
+schema = StructType([
+    StructField('title', StringType(), True),
+    StructField('date', StringType(), True),
+    StructField('link', StringType(), True),
+    StructField('img', StringType(), True),
+    StructField('media', StringType(), True),
+    StructField('reporter', StringType(), True),
+    StructField('stock', StringType(), True)
+  ])
+combined_df = pd.DataFrame()
 
 for stock in list_stocks:
-  print(stock[0])
-  output_extrated_data_path = f"gs://python_files_stock/outputs_extracted_data/{stock[0]}/{today}/{stock[0]}-{today}"
-  list_news = readNewsDate(term =stock[0])
-  df_news = listNewsToDataPandas(list_news)
-  df_news.to_parquet(output_extrated_data_path)
+    parquet_path = f"gs://python_files_stock/outputs_extracted_data/{stock[0]}/{today}/{stock[0]}-{today}"
+    df_stock = pd.read_parquet(parquet_path)
+    df_stock["stock"] = stock[0]
+    combined_df = pd.concat([combined_df, df_stock], ignore_index=True)
 
+combined_df.to_parquet(f"gs://python_files_stock/outputs_extracted_data/combined_data/combined_data_{today}")
+#combined_df.write.mode("overwrite").parquet(f"gs://python_files_stock/outputs_extracted_data/combined_data/combined_data_{today}")
