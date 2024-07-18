@@ -1,0 +1,14 @@
+version: '3'
+services:
+  spark:
+    build: Containers
+    container_name: spark_master
+    volumes:
+      - .:/app
+    environment:
+      - SPARK_MASTER_NAME=spark-master
+      - SPARK_MASTER_PORT=7077
+    ports:
+      - "4040:4040"
+    #command: >
+    #  spark-submit --master local /app/your_spark_script.py
