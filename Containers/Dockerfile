@@ -6,7 +6,8 @@ ENV SPARK_MASTER_NAME=spark-master
 ENV SPARK_MASTER_PORT=7077
 
 # Install any necessary packages
-RUN apt-get update && apt-get install -y python3-pip
+RUN apt-get update
+RUN apt-get install -y python3-pip
 
 # Install Python dependencies
 COPY Requirements.txt .
