@@ -9,16 +9,16 @@ down:
 # Testing, auto formatting, type checks, & Lint checks
 
 pytest:
-	docker exec spark bash -c 'python3 -m pytest --log-cli-level info -p no:warnings -v ./Tests'
+	docker exec spark-master bash -c 'python3 -m pytest --log-cli-level info -p no:warnings -v ./Tests'
 
 format:
-	docker exec spark black -S --line-length 79 --preview .
-	docker exec spark isort .
+	docker exec spark-master black -S --line-length 79 --preview .
+	docker exec spark-master isort .
 
 type:
-	docker exec spark mypy --no-implicit-reexport --ignore-missing-imports --no-namespace-packages .
+	docker exec spark-master mypy --no-implicit-reexport --ignore-missing-imports --no-namespace-packages .
 
 lint:
-	docker exec spark flake8 .
+	docker exec spark-master flake8 .
 
 ci: format type lint pytest
