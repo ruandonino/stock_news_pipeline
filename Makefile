@@ -16,7 +16,7 @@ format:
 	docker exec spark_master isort .
 
 type:
-	docker exec spark_master mypy --no-implicit-reexport --ignore-missing-imports --no-namespace-packages .
+	docker exec spark_master mypy --no-implicit-reexport --ignore-missing-imports --no-namespace-packages ./app
 
 lint:
 	docker exec spark_master flake8 .
