@@ -10,6 +10,8 @@ from pyspark.sql import Row
 import sys
 import os
 
+from pyspark.sql.types import StructType, StructField, StringType
+
 # Ensure the parent directory is in the system path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -149,13 +151,22 @@ def test_process_data_spark(mock_date, mock_spark, spark):
     # Create a mock SparkSession
     mock_spark.builder.appName.return_value.config.return_value.getOrCreate.return_value = spark
 
+    schema = StructType([
+        StructField("title", StringType(), True),
+        StructField("date", StringType(), True),
+        StructField("link", StringType(), True),
+        StructField("img", StringType(), True),
+        StructField("media", StringType(), True),
+        StructField("reporter", StringType(), True),
+    ])
+
     # Create a sample DataFrame to mimic reading from GCS
     sample_data = [
         Row(title="  Some Title  ", date="9 of Dec. of 2023", link="http://example.com", img="http://example.com/image.jpg", media="Media1", reporter="Reporter1"),
         Row(title="  Another Title  ", date="10 dias atrás", link="http://example.com", img="http://example.com/image.jpg", media="Media2", reporter="Reporter2"),
         Row(title="", date="Ontem", link="http://example.com", img="http://example.com/image.jpg", media="Media3", reporter="Reporter3"),
     ]
-    df = spark.createDataFrame(sample_data)
+    df = spark.createDataFrame(sample_data, schema)
 
     # Mock the read.parquet method to return the sample DataFrame
     with patch.object(spark.read, 'parquet', return_value=df):
