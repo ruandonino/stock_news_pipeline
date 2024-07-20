@@ -140,7 +140,7 @@ def spark():
 
 @patch('process_data.SparkSession')
 @patch('process_data.date', spec=date)
-def test_process_data(mock_date, mock_spark, spark):
+def test_process_data_spark(mock_date, mock_spark, spark):
     # Mock the date to return a consistent value
     mock_date.today.return_value = date(2023, 7, 11)
     mock_date.side_effect = lambda *args, **kwargs: date(*args, **kwargs)
