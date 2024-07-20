@@ -166,7 +166,7 @@ def test_process_data_spark(mock_date, mock_spark, spark):
         Row(title="  Another Title  ", date="10 dias atrás", link="http://example.com", img="http://example.com/image.jpg", media="Media2", reporter="Reporter2"),
         Row(title="", date="Ontem", link="http://example.com", img="http://example.com/image.jpg", media="Media3", reporter="Reporter3"),
     ]
-    df = spark.createDataFrame(sample_data, schema)
+    df = spark.createDataFrame(data = sample_data, schema = schema, verifySchema=False)
 
     # Mock the read.parquet method to return the sample DataFrame
     with patch.object(spark.read, 'parquet', return_value=df):
