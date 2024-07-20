@@ -3,7 +3,7 @@ from pyspark.sql.functions import col, trim, when
 from datetime import date
 from pyspark.sql.functions import regexp_extract, current_date, date_format, expr, year
 
-def process_data():
+def process_data_spark():
     # Initialize a SparkSession
     spark = SparkSession.builder \
         .appName("DropEmptyAndTrimWhitespace") \
@@ -81,4 +81,4 @@ def process_data():
 
 
 if __name__ == "__main__":
-    process_data()
+    process_data_spark()
