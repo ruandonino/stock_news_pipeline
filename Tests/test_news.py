@@ -151,20 +151,48 @@ def test_process_data_spark(mock_date, mock_spark, spark):
     # Create a mock SparkSession
     mock_spark.builder.appName.return_value.config.return_value.getOrCreate.return_value = spark
 
-    schema = StructType(sorted([
+    schema = StructType([
         StructField("title", StringType(), True),
         StructField("date", StringType(), True),
         StructField("link", StringType(), True),
         StructField("img", StringType(), True),
         StructField("media", StringType(), True),
         StructField("reporter", StringType(), True),
-    ]))
+    ])
 
     # Create a sample DataFrame to mimic reading from GCS
+    '''
     sample_data = [
         Row(title="  Some Title  ", date="9 of Dec. of 2023", link="http://example.com", img="http://example.com/image.jpg", media="Media1", reporter="Reporter1"),
         Row(title="  Another Title  ", date="10 dias atrás", link="http://example.com", img="http://example.com/image.jpg", media="Media2", reporter="Reporter2"),
         Row(title="", date="Ontem", link="http://example.com", img="http://example.com/image.jpg", media="Media3", reporter="Reporter3"),
+    ]
+    '''
+    sample_data = [
+        {
+            "title": "  Some Title  ",
+            "date": "9 of Dec. of 2023",
+            "link": "http://example.com",
+            "img": "http://example.com/image.jpg",
+            "media": "Media1",
+            "reporter": "Reporter1",
+        },
+        {
+            "title": "  Another Title  ",
+            "date": "10 dias atrás",
+            "link": "http://example.com",
+            "img": "http://example.com/image.jpg",
+            "media": "Media2",
+            "reporter": "Reporter2",
+        },
+        {
+            "title": "",
+            "date": "Ontem",
+            "link": "http://example.com",
+            "img": "http://example.com/image.jpg",
+            "media": "Media3",
+            "reporter": "Reporter3",
+        },
     ]
     df = spark.createDataFrame(data = sample_data, schema = schema, verifySchema=False)
 
