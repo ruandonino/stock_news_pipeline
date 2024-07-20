@@ -11,7 +11,7 @@ import sys
 import os
 
 # Ensure the parent directory is in the system path
-#sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Import the function to be tested
 from Code_ETL.pyspark_extract import readNewsDate, listNewsToDataPandas
