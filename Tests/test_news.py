@@ -167,7 +167,7 @@ def test_process_data(mock_date, mock_spark, spark):
                 mock_config.return_value = mock_config
                 mock_config.getOrCreate.return_value = spark
                 # Call the process_data function
-                process_data()
+                process_data_spark()
                 # Verify the transformations
                 result = df.collect()
                 assert result[0].title.strip() == "Some Title"
