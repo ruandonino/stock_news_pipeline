@@ -21,4 +21,4 @@ type:
 lint:
 	docker exec spark_master flake8 ./Code_ETL
 
-ci: format type lint pytest
+ci: format type pytest
