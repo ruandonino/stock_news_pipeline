@@ -14,9 +14,9 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Import the function to be tested
-from pyspark_extract import readNewsDate, listNewsToDataPandas
-from join_by_data import join_dataframes
-from process_data import process_data
+from Code_ETL.pyspark_extract import readNewsDate, listNewsToDataPandas
+from Code_ETL.join_by_data import join_dataframes
+from Code_ETL.process_data import process_data
 
 
 # Mock data to be returned by GoogleNews
