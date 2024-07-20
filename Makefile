@@ -19,6 +19,6 @@ type:
 	docker exec spark_master mypy --no-implicit-reexport --ignore-missing-imports --no-namespace-packages .
 
 lint:
-	docker exec spark_master flake8 .
+	docker exec spark_master flake8 ./Code_ETL
 
 ci: format type lint pytest
