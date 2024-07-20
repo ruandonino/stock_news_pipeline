@@ -138,7 +138,7 @@ def spark():
         .config("spark.python.worker.retries", "10") \
         .getOrCreate()
 
-@patch('Code_ETL.process_data_spark.process_data_spark.pyspark.sql.SparkSession')
+@patch('pyspark.sql.SparkSession')
 @patch('datetime.date')
 def test_process_data_spark(mock_date, mock_spark, spark):
     # Mock the date to return a consistent value
