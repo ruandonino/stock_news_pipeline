@@ -153,7 +153,7 @@ def test_process_data_spark(mock_date, mock_spark, spark):
 
     schema = StructType([
         StructField("title", StringType(), True),
-        StructField("date", StringType(), True),
+        StructField("date1", StringType(), True),
         StructField("link", StringType(), True),
         StructField("img", StringType(), True),
         StructField("media", StringType(), True),
@@ -171,7 +171,7 @@ def test_process_data_spark(mock_date, mock_spark, spark):
     sample_data = [
         {
             "title": "  Some Title  ",
-            "date": "9 of Dec. of 2023",
+            "date1": "9 of Dec. of 2023",
             "link": "http://example.com",
             "img": "http://example.com/image.jpg",
             "media": "Media1",
@@ -179,7 +179,7 @@ def test_process_data_spark(mock_date, mock_spark, spark):
         },
         {
             "title": "  Another Title  ",
-            "date": "10 dias atrás",
+            "date1": "10 dias atrás",
             "link": "http://example.com",
             "img": "http://example.com/image.jpg",
             "media": "Media2",
@@ -187,14 +187,14 @@ def test_process_data_spark(mock_date, mock_spark, spark):
         },
         {
             "title": "",
-            "date": "Ontem",
+            "date1": "Ontem",
             "link": "http://example.com",
             "img": "http://example.com/image.jpg",
             "media": "Media3",
             "reporter": "Reporter3",
         },
     ]
-    df = spark.createDataFrame(data = sample_data, schema = schema, verifySchema=False)
+    df = spark.createDataFrame(data = sample_data, schema = schema)
 
     # Mock the read.parquet method to return the sample DataFrame
     with patch.object(spark.read, 'parquet', return_value=df):
