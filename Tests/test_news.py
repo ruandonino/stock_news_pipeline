@@ -130,7 +130,7 @@ def test_join_dataframes():
         mock_read_parquet.assert_any_call(
             'gs://python_files_stock/outputs_extracted_data/BBAS3/2024-07-12/BBAS3-2024-07-12')
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def spark():
     return SparkSession.builder \
         .appName("TestSession") \
