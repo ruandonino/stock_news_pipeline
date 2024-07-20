@@ -16,7 +16,7 @@ import os
 # Import the function to be tested
 from Code_ETL.pyspark_extract import readNewsDate, listNewsToDataPandas
 from Code_ETL.join_by_data import join_dataframes
-from Code_ETL.process_data import process_data_spark
+from Code_ETL.process_data_spark import process_data_spark
 
 
 # Mock data to be returned by GoogleNews
@@ -130,7 +130,7 @@ def test_join_dataframes():
         mock_read_parquet.assert_any_call(
             'gs://python_files_stock/outputs_extracted_data/BBAS3/2024-07-12/BBAS3-2024-07-12')
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def spark():
     return SparkSession.builder \
         .appName("TestSession") \
