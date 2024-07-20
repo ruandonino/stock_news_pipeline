@@ -139,11 +139,12 @@ def spark():
         .getOrCreate()
 
 @patch('Code_ETL.process_data_spark.process_data_spark.SparkSession')
-@patch('Code_ETL.process_data_spark.process_data_spark.datetime.date')
-def test_process_data_spark(mock_date, mock_spark, spark):
+@patch('datetime.date.today')
+def test_process_data_spark(mock_today, mock_spark, spark):
     # Mock the date to return a consistent value
-    mock_date.today.return_value = date(2023, 7, 11)
-    mock_date.side_effect = lambda *args, **kwargs: date(*args, **kwargs)
+    #mock_date.today.return_value = date(2023, 7, 11)
+    mock_today.return_value = date(2023, 7, 11)
+    mock_today.side_effect = lambda *args, **kwargs: date(*args, **kwargs)
 
     # Create a mock SparkSession
     mock_spark.builder.appName.return_value.config.return_value.getOrCreate.return_value = spark
