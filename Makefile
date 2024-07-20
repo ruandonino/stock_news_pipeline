@@ -9,7 +9,7 @@ down:
 # Testing, auto formatting, type checks, & Lint checks
 
 pytest:
-	docker exec spark_master bash -c 'python3 -m pytest --log-cli-level info -p no:warnings -v ./Tests'
+	docker exec spark_master bash -c 'python3 -m pytest --log-cli-level info -p no:warnings -v .'
 
 format:
 	docker exec spark_master black -S --line-length 79 --preview .
