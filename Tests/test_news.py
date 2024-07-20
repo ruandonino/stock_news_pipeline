@@ -139,7 +139,7 @@ def spark():
         .getOrCreate()
 
 @patch('Code_ETL.process_data_spark.process_data_spark.SparkSession')
-@patch('datetime.date.today')
+@patch('datetime.date.today',spec=date)
 def test_process_data_spark(mock_today, mock_spark, spark):
     # Mock the date to return a consistent value
     #mock_date.today.return_value = date(2023, 7, 11)
