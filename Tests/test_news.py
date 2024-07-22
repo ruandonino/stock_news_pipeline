@@ -203,24 +203,24 @@ def test_process_data_spark(mock_date, mock_spark, spark):
             mock_write = MagicMock()
             mock_write_mode.return_value = mock_write
             # Mock the Spark configurations related to Google Cloud Storage
-            with patch('Code_ETL.process_data_spark.SparkSession.builder.config') as mock_config:
-                mock_config.return_value = mock_config
-                mock_config.getOrCreate.return_value = spark
-                # Call the process_data function
-                result = process_data_spark().collect()
-                # Verify the transformations
-                assert result[0].title.strip() == "Some Title"
-                assert result[0].Formatted_Date == "09/12/2023"
-                assert result[1].Formatted_Date == (date(2023, 7, 11) - timedelta(days=10)).strftime("%d/%m/%Y")
-                assert result[2].Formatted_Date == (date(2023, 7, 10)).strftime("%d/%m/%Y")
+            #with patch('Code_ETL.process_data_spark.SparkSession.builder.config') as mock_config:
+            #    mock_config.return_value = mock_config
+            #    mock_config.getOrCreate.return_value = spark
+            # Call the process_data function
+            result = process_data_spark().collect()
+            # Verify the transformations
+            assert result[0].title.strip() == "Some Title"
+            assert result[0].Formatted_Date == "09/12/2023"
+            assert result[1].Formatted_Date == (date(2023, 7, 11) - timedelta(days=10)).strftime("%d/%m/%Y")
+            assert result[2].Formatted_Date == (date(2023, 7, 10)).strftime("%d/%m/%Y")
 
-                # Check if the parquet file was read from the correct path
-                read_file_path = "gs://python_files_stock/outputs_extracted_data/combined_data/combined_data_2023-07-11"
-                spark.read.parquet.assert_any_call(read_file_path)
+            # Check if the parquet file was read from the correct path
+            read_file_path = "gs://python_files_stock/outputs_extracted_data/combined_data/combined_data_2023-07-11"
+            spark.read.parquet.assert_any_call(read_file_path)
 
-                # Check if the write method was called with the correct path
-                output_path = "gs://python_files_stock/outputs_processed_data/processed_data_2023-07-11"
-                mock_write.parquet.assert_any_call(output_path)
+            # Check if the write method was called with the correct path
+            output_path = "gs://python_files_stock/outputs_processed_data/processed_data_2023-07-11"
+            mock_write.parquet.assert_any_call(output_path)
 # Run the tests
 if __name__ == "__main__":
     pytest.main()
