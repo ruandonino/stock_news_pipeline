@@ -141,7 +141,7 @@ def spark():
         .getOrCreate()
 
 @patch('pyspark.sql.SparkSession')
-@patch('datetime.date')
+@patch('Code_ETL.process_data_spark.datetime.date')
 def test_process_data_spark(mock_date, mock_spark, spark):
     # Mock the date to return a consistent value
     #mock_date.today.return_value = date(2023, 7, 11)
@@ -153,7 +153,7 @@ def test_process_data_spark(mock_date, mock_spark, spark):
 
     schema = StructType([
         StructField("title", StringType(), True),
-        StructField("date1", StringType(), True),
+        StructField("date", StringType(), True),
         StructField("link", StringType(), True),
         StructField("img", StringType(), True),
         StructField("media", StringType(), True),
@@ -171,7 +171,7 @@ def test_process_data_spark(mock_date, mock_spark, spark):
     sample_data = [
         {
             "title": "  Some Title  ",
-            "date1": "9 of Dec. of 2023",
+            "date": "9 of Dec. of 2023",
             "link": "http://example.com",
             "img": "http://example.com/image.jpg",
             "media": "Media1",
@@ -179,7 +179,7 @@ def test_process_data_spark(mock_date, mock_spark, spark):
         },
         {
             "title": "  Another Title  ",
-            "date1": "10 dias atrás",
+            "date": "10 dias atrás",
             "link": "http://example.com",
             "img": "http://example.com/image.jpg",
             "media": "Media2",
@@ -187,7 +187,7 @@ def test_process_data_spark(mock_date, mock_spark, spark):
         },
         {
             "title": "",
-            "date1": "Ontem",
+            "date": "Ontem",
             "link": "http://example.com",
             "img": "http://example.com/image.jpg",
             "media": "Media3",
