@@ -203,7 +203,7 @@ def test_process_data_spark(mock_date, mock_spark, spark):
             mock_write = MagicMock()
             mock_write_mode.return_value = mock_write
             # Mock the Spark configurations related to Google Cloud Storage
-            with patch('process_data.SparkSession.builder.config') as mock_config:
+            with patch('Code_ETL.process_data_spark.SparkSession.builder.config') as mock_config:
                 mock_config.return_value = mock_config
                 mock_config.getOrCreate.return_value = spark
                 # Call the process_data function
