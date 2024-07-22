@@ -192,11 +192,11 @@ def test_transform_df(spark):
             "img": "http://example.com/image.jpg",
             "media": "Media3",
             "reporter": "Reporter3",
-        },
+        }
     ]
     df = spark.createDataFrame(data = sample_data, schema = schema)
     result = transform_df(df).collect()
-    print(df)
+    print(df.collect())
     print(result)
     assert result[0].title.strip() == "Some Title"
     assert result[0].Formatted_Date == "09/12/2023"
