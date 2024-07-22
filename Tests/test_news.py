@@ -196,6 +196,7 @@ def test_transform_df(spark):
     ]
     df = spark.createDataFrame(data = sample_data, schema = schema)
     result = transform_df(df).collect()
+    print(result)
     assert result[0].title.strip() == "Some Title"
     assert result[0].Formatted_Date == "09/12/2023"
     assert result[1].Formatted_Date == (date(2023, 7, 11) - timedelta(days=10)).strftime("%d/%m/%Y")
