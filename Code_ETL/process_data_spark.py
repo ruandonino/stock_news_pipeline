@@ -25,24 +25,24 @@ def transform_df(df_data_stock):
     month_case_statement = """
             CASE
                 WHEN month = 'Jan.' THEN '01'
-                WHEN month = 'Feb.' THEN '02'
+                WHEN month = 'Fev.' THEN '02'
                 WHEN month = 'Mar.' THEN '03'
-                WHEN month = 'Apr.' THEN '04'
-                WHEN month = 'May.' THEN '05'
+                WHEN month = 'Abr.' THEN '04'
+                WHEN month = 'Mai.' THEN '05'
                 WHEN month = 'Jun.' THEN '06'
                 WHEN month = 'Jul.' THEN '07'
-                WHEN month = 'Aug.' THEN '08'
-                WHEN month = 'Sep.' THEN '09'
-                WHEN month = 'Oct.' THEN '10'
+                WHEN month = 'Ago.' THEN '08'
+                WHEN month = 'Set.' THEN '09'
+                WHEN month = 'Out.' THEN '10'
                 WHEN month = 'Nov.' THEN '11'
-                WHEN month = 'Dec.' THEN '12'
+                WHEN month = 'Dez.' THEN '12'
             END
         """
 
     # Extract parts of the date for "9 of Dec. of 2023"
     df_data_stock = df_data_stock.withColumn("Day", regexp_extract(col("date"), r"(\d{1,2}) de \w+\. de \d*", 1)) \
-        .withColumn("Month", regexp_extract(col("date"), r"\d{1,2} of (\w+)\. of \d*", 1)) \
-        .withColumn("Year", regexp_extract(col("date"), r"\d{1,2} of \w+\. of (\d*)", 1))
+        .withColumn("Month", regexp_extract(col("date"), r"\d{1,2} de (\w+)\. de \d*", 1)) \
+        .withColumn("Year", regexp_extract(col("date"), r"\d{1,2} de \w+\. de (\d*)", 1))
     df_data_stock = df_data_stock.withColumn("Year",
                                              when(col("Year") == "", year(current_date())).otherwise(col("Year")))
     print("first step")
