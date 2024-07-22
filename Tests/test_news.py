@@ -186,6 +186,14 @@ def test_transform_df(spark):
             "reporter": "Reporter2",
         },
         {
+            "title": "test",
+            "date": "Ontem",
+            "link": "http://example.com",
+            "img": "http://example.com/image.jpg",
+            "media": "Media3",
+            "reporter": "Reporter3",
+        },
+        {
             "title": "",
             "date": "Ontem",
             "link": "http://example.com",
@@ -195,13 +203,12 @@ def test_transform_df(spark):
         }
     ]
     df = spark.createDataFrame(data = sample_data, schema = schema)
-    print(df.collect())
     result = transform_df(df).collect()
-    print(result)
     assert result[0].title.strip() == "Some Title"
     assert result[0].Formatted_Date == "09/12/2023"
     assert result[1].Formatted_Date == (datetime.now().date() - timedelta(days=10)).strftime("%d/%m/%Y")
     assert result[2].Formatted_Date == (datetime.now().date()- timedelta(days=1)).strftime("%d/%m/%Y")
+    assert len(result) == 3
 
     # Mock the read.parquet method to return the sample DataFrame
     #with patch.object(spark.read, 'parquet', return_value=df):
