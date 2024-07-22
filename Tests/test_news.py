@@ -207,9 +207,8 @@ def test_process_data_spark(mock_date, mock_spark, spark):
                 mock_config.return_value = mock_config
                 mock_config.getOrCreate.return_value = spark
                 # Call the process_data function
-                process_data_spark()
+                result = process_data_spark()
                 # Verify the transformations
-                result = df.collect()
                 assert result[0].title.strip() == "Some Title"
                 assert result[0].Formatted_Date == "09/12/2023"
                 assert result[1].Formatted_Date == (date(2023, 7, 11) - timedelta(days=10)).strftime("%d/%m/%Y")

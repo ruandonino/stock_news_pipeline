@@ -76,9 +76,10 @@ def process_data_spark():
 
     output_path = f"gs://python_files_stock/outputs_processed_data/processed_data_{today}"
     df_data_stock.write.mode('overwrite').parquet(output_path)
+    return df_data_stock
 
 
 
 
 if __name__ == "__main__":
-    process_data_spark()
+    result_data =process_data_spark()
