@@ -67,6 +67,7 @@ def transform_df(df_data_stock):
     # Drop intermediate columns if not needed
     df_data_stock = df_data_stock.drop("Date", "Days_Ago", "Day", "Month", "Year", "Month_Num", "Full_Date",
                                        "Actual_Date")
+    return df_data_stock
 def process_data_spark():
     # Initialize a SparkSession
     spark = SparkSession.builder \
