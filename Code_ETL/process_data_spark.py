@@ -62,12 +62,12 @@ def transform_df(df_data_stock):
     df_data_stock = df_data_stock.withColumn("Actual_Date", when(col("Days_Ago").isNotNull(),
                                                                  expr("date_sub(current_date(), Days_Ago)"))
                                              .otherwise(col("Full_Date")))
-    print("second step")
-    print(df_data_stock.collect())
 
     # Format the actual date to 'dd/MM/yyyy'
     df_data_stock = df_data_stock.withColumn("Formatted_Date", date_format(col("Actual_Date"), "dd/MM/yyyy"))
 
+    print("second step")
+    print(df_data_stock.collect())
     # Drop intermediate columns if not needed
     df_data_stock = df_data_stock.drop("Date", "Days_Ago", "Day", "Month", "Year", "Month_Num", "Full_Date",
                                        "Actual_Date")
