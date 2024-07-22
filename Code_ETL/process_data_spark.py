@@ -45,6 +45,8 @@ def transform_df(df_data_stock):
         .withColumn("Year", regexp_extract(col("date"), r"\d{1,2} of \w+\. of (\d*)", 1))
     df_data_stock = df_data_stock.withColumn("Year",
                                              when(col("Year") == "", year(current_date())).otherwise(col("Year")))
+    print("first step")
+    print(df_data_stock.collect())
     # Convert the extracted month to a two-digit format
     df_data_stock = df_data_stock.withColumn("Month_Num", expr(month_case_statement).alias("month_num"))
 
