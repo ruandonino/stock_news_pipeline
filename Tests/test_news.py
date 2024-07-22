@@ -207,7 +207,7 @@ def test_process_data_spark(mock_date, mock_spark, spark):
                 mock_config.return_value = mock_config
                 mock_config.getOrCreate.return_value = spark
                 # Call the process_data function
-                result = process_data_spark()
+                result = process_data_spark().collect()
                 # Verify the transformations
                 assert result[0].title.strip() == "Some Title"
                 assert result[0].Formatted_Date == "09/12/2023"
