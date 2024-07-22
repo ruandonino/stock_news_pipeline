@@ -45,8 +45,6 @@ def transform_df(df_data_stock):
         .withColumn("Year", regexp_extract(col("date"), r"\d{1,2} de \w+\. de (\d*)", 1))
     df_data_stock = df_data_stock.withColumn("Year",
                                              when(col("Year") == "", year(current_date())).otherwise(col("Year")))
-    print("first step")
-    print(df_data_stock.collect())
     # Convert the extracted month to a two-digit format
     df_data_stock = df_data_stock.withColumn("Month_Num", expr(month_case_statement).alias("month_num"))
 
@@ -66,8 +64,6 @@ def transform_df(df_data_stock):
     # Format the actual date to 'dd/MM/yyyy'
     df_data_stock = df_data_stock.withColumn("Formatted_Date", date_format(col("Actual_Date"), "dd/MM/yyyy"))
 
-    print("second step")
-    print(df_data_stock.collect())
     # Drop intermediate columns if not needed
     df_data_stock = df_data_stock.drop("Date", "Days_Ago", "Day", "Month", "Year", "Month_Num", "Full_Date",
                                        "Actual_Date")
