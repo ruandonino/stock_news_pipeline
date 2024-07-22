@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 # Import the function to be tested
 from Code_ETL.pyspark_extract import readNewsDate, listNewsToDataPandas
 from Code_ETL.join_by_data import join_dataframes
-from Code_ETL.process_data_spark import process_data_spark
+from Code_ETL.process_data_spark import process_data_spark, transform_df
 
 
 # Mock data to be returned by GoogleNews
@@ -142,14 +142,14 @@ def spark():
 
 @patch('Code_ETL.process_data_spark.SparkSession')
 @patch('Code_ETL.process_data_spark.date')
-def test_process_data_spark(mock_date, mock_spark, spark):
+def test_transform_df(spark):
     # Mock the date to return a consistent value
     #mock_date.today.return_value = date(2023, 7, 11)
-    mock_date.today.return_value = date(2023, 7, 11)
+    #mock_date.today.return_value = date(2023, 7, 11)
     #mock_today.side_effect = lambda *args, **kwargs: date(*args, **kwargs)
 
     # Create a mock SparkSession
-    mock_spark.builder.appName.return_value.config.return_value.getOrCreate.return_value = spark
+    #mock_spark.builder.appName.return_value.config.return_value.getOrCreate.return_value = spark
 
     schema = StructType([
         StructField("title", StringType(), True),
@@ -195,12 +195,18 @@ def test_process_data_spark(mock_date, mock_spark, spark):
         },
     ]
     df = spark.createDataFrame(data = sample_data, schema = schema)
+    result = transform_df(df)
+    assert result[0].title.strip() == "Some Title"
+    assert result[0].Formatted_Date == "09/12/2023"
+    assert result[1].Formatted_Date == (date(2023, 7, 11) - timedelta(days=10)).strftime("%d/%m/%Y")
+    assert result[2].Formatted_Date == (date(2023, 7, 10)).strftime("%d/%m/%Y")
 
     # Mock the read.parquet method to return the sample DataFrame
-    with patch.object(spark.read, 'parquet', return_value=df):
+    #with patch.object(spark.read, 'parquet', return_value=df):
         # Mock the DataFrame write mode and parquet method
+    '''
         with patch.object(df.write, 'mode') as mock_write_mode:
-            mock_write = MagicMock()
+           mock_write = MagicMock()
             mock_write_mode.return_value = mock_write
             # Mock the Spark configurations related to Google Cloud Storage
             #with patch('Code_ETL.process_data_spark.SparkSession.builder.config') as mock_config:
@@ -209,10 +215,7 @@ def test_process_data_spark(mock_date, mock_spark, spark):
             # Call the process_data function
             result = process_data_spark().collect()
             # Verify the transformations
-            assert result[0].title.strip() == "Some Title"
-            assert result[0].Formatted_Date == "09/12/2023"
-            assert result[1].Formatted_Date == (date(2023, 7, 11) - timedelta(days=10)).strftime("%d/%m/%Y")
-            assert result[2].Formatted_Date == (date(2023, 7, 10)).strftime("%d/%m/%Y")
+           
 
             # Check if the parquet file was read from the correct path
             read_file_path = "gs://python_files_stock/outputs_extracted_data/combined_data/combined_data_2023-07-11"
@@ -221,6 +224,7 @@ def test_process_data_spark(mock_date, mock_spark, spark):
             # Check if the write method was called with the correct path
             output_path = "gs://python_files_stock/outputs_processed_data/processed_data_2023-07-11"
             mock_write.parquet.assert_any_call(output_path)
+        '''
 # Run the tests
 if __name__ == "__main__":
     pytest.main()

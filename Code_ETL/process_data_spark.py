@@ -3,18 +3,12 @@ from pyspark.sql.functions import col, trim, when
 from datetime import date
 from pyspark.sql.functions import regexp_extract, current_date, date_format, expr, year
 
-def process_data_spark():
-    # Initialize a SparkSession
-    spark = SparkSession.builder \
-        .appName("DropEmptyAndTrimWhitespace") \
-        .getOrCreate()
 
-    today = date.today()
-    # Define the path to the Parquet file on Google Cloud Storage
-    read_file_path = f"gs://python_files_stock/outputs_extracted_data/combined_data/combined_data_{today}"
+def read_df(spark, read_path):
     # Read the Parquet file into a DataFrame
-    df_data_stock = spark.read.parquet(read_file_path)
-
+    df_data_stock = spark.read.parquet(read_path)
+    return df_data_stock
+def transform_df(df_data_stock):
     # Specify the column to check for empty cells and the column to trim
     column_to_check = "title"  # Column to check for empty cells
 
@@ -29,21 +23,21 @@ def process_data_spark():
 
     # Define month abbreviations mapping as an SQL case statement
     month_case_statement = """
-        CASE
-            WHEN month = 'Jan.' THEN '01'
-            WHEN month = 'Feb.' THEN '02'
-            WHEN month = 'Mar.' THEN '03'
-            WHEN month = 'Apr.' THEN '04'
-            WHEN month = 'May.' THEN '05'
-            WHEN month = 'Jun.' THEN '06'
-            WHEN month = 'Jul.' THEN '07'
-            WHEN month = 'Aug.' THEN '08'
-            WHEN month = 'Sep.' THEN '09'
-            WHEN month = 'Oct.' THEN '10'
-            WHEN month = 'Nov.' THEN '11'
-            WHEN month = 'Dec.' THEN '12'
-        END
-    """
+            CASE
+                WHEN month = 'Jan.' THEN '01'
+                WHEN month = 'Feb.' THEN '02'
+                WHEN month = 'Mar.' THEN '03'
+                WHEN month = 'Apr.' THEN '04'
+                WHEN month = 'May.' THEN '05'
+                WHEN month = 'Jun.' THEN '06'
+                WHEN month = 'Jul.' THEN '07'
+                WHEN month = 'Aug.' THEN '08'
+                WHEN month = 'Sep.' THEN '09'
+                WHEN month = 'Oct.' THEN '10'
+                WHEN month = 'Nov.' THEN '11'
+                WHEN month = 'Dec.' THEN '12'
+            END
+        """
 
     # Extract parts of the date for "9 of Dec. of 2023"
     df_data_stock = df_data_stock.withColumn("Day", regexp_extract(col("date"), r"(\d{1,2}) de \w+\. de \d*", 1)) \
@@ -73,6 +67,20 @@ def process_data_spark():
     # Drop intermediate columns if not needed
     df_data_stock = df_data_stock.drop("Date", "Days_Ago", "Day", "Month", "Year", "Month_Num", "Full_Date",
                                        "Actual_Date")
+def process_data_spark():
+    # Initialize a SparkSession
+    spark = SparkSession.builder \
+        .appName("DropEmptyAndTrimWhitespace") \
+        .getOrCreate()
+
+    today = date.today()
+    # Define the path to the Parquet file on Google Cloud Storage
+    read_file_path = f"gs://python_files_stock/outputs_extracted_data/combined_data/combined_data_{today}"
+    # Read the Parquet file into a DataFrame
+    df_data_stock = read_df(spark,read_file_path)
+
+    # Transform the DataFrame
+    df_data_stock = transform_df(df_data_stock)
 
     output_path = f"gs://python_files_stock/outputs_processed_data/processed_data_{today}"
     df_data_stock.write.mode('overwrite').parquet(output_path)
