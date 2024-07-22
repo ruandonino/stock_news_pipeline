@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 import pytest
 from unittest.mock import patch, MagicMock
@@ -200,8 +200,8 @@ def test_transform_df(spark):
     print(result)
     assert result[0].title.strip() == "Some Title"
     assert result[0].Formatted_Date == "09/12/2023"
-    assert result[1].Formatted_Date == (date(2023, 7, 11) - timedelta(days=10)).strftime("%d/%m/%Y")
-    assert result[2].Formatted_Date == (date(2023, 7, 10)).strftime("%d/%m/%Y")
+    assert result[1].Formatted_Date == (datetime.now().date() - timedelta(days=10)).strftime("%d/%m/%Y")
+    assert result[2].Formatted_Date == (datetime.now().date()- timedelta(days=1)).strftime("%d/%m/%Y")
 
     # Mock the read.parquet method to return the sample DataFrame
     #with patch.object(spark.read, 'parquet', return_value=df):
