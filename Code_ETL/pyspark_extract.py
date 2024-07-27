@@ -152,7 +152,7 @@ if __name__ == "__main__":
       output_extrated_data_path = f"gs://python_files_stock/outputs_extracted_data/{stock[0]}/{today}"
       list_news = readNewsDate(term =stock[0])
       df_news = listNewsToDataPandas(list_news)
-      #df_news.to_parquet(output_extrated_data_path)
+      df_news.to_parquet(output_extrated_data_path)
       #df_news = listNewsToDataSpark(list_news, spark)
       #saveDataframeToParquet(df_news, output_extrated_data_path)
       #df_news.unpersist()

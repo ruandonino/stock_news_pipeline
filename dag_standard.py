@@ -62,9 +62,9 @@ with DAG(
 ) as dag:
     checkout_repo = BashOperator(
         task_id='checkout_repo',
-        bash_command='rm -rf gs://python_files_stock/git_repository && git clone https://github.com/ruandonino/stock_news_pipeline.git gs://python_files_stock/git_repository',
+        bash_command='git clone https://github.com/ruandonino/stock_news_pipeline.git gs://python_files_stock/git_repository',
     )
-    create_cluster = DataprocCreateClusterOperator(
+    create_cluster = DataprocCreateClusterOperator(-west1i
         task_id="create_cluster",
         project_id=PROJECT_ID,
         cluster_config=CLUSTER_GENERATOR_CONFIG,
