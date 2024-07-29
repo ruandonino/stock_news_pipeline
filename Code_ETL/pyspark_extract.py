@@ -149,7 +149,7 @@ if __name__ == "__main__":
 
     for stock in list_stocks:
       print(stock[0])
-      output_extrated_data_path = f"gs://python_files_stock/outputs_extracted_data/{stock[0]}/{today}"
+      output_extrated_data_path = f"gs://python_files_stock/outputs_extracted_data/{stock[0]}/{today}/{stock[0]}-{today}"
       list_news = readNewsDate(term =stock[0])
       df_news = listNewsToDataPandas(list_news)
       df_news.to_parquet(output_extrated_data_path)
