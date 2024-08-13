@@ -22,10 +22,10 @@ This ETL pipeline is designed using best practices, to ensure that, this pipelin
 This project also has CI/CD automated, with unit tests written using pytest located in the path Tests. The test run in Github Actions using docker container 
 with image at path Containers.<br>
 <br>
-Here is the image of processed data in parquet format at GCS, ready to be used by others applications. <br>
-<br>
+Here is the image of processed data in parquet format at GCS, ready to be used by other applications.
+
  ![small_gcs](https://github.com/user-attachments/assets/54e417be-3204-4642-8ac8-bcb697bf5869)
-<br>
+
   <!--imagem das saidas do projeto(parquet no gcs, tabela do bigquery e gráfico com os dados) -->
 
 
