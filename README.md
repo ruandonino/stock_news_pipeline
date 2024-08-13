@@ -18,6 +18,7 @@ This ETL is a dag in Airflow, the following image is the dag of this pipeline: T
 - Process_task - This task run pyspark code to process the date format of the news, and also to do some filters like delete some empty news.
 This code saves the processed parquet file to GCS.<br>
 - Delete_cluster - Here the dataproc cluster is deleted.<br>
+
 This ETL pipeline is designed using best practices, to ensure that, this pipeline is idempotent, and that the cluster is up just by the needed time.
 This project also has CI/CD automated, with unit tests written using pytest located in the path Tests. The test run in Github Actions using docker container 
 with image at path Containers.<br>
