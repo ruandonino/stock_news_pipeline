@@ -21,8 +21,9 @@ This code saves the processed parquet file to GCS.<br>
 This ETL pipeline is designed using best practices, to ensure that, this pipeline is idempotent, and that the cluster is up just by the needed time.
 This project also has CI/CD automated, with unit tests written using pytest located in the path Tests. The test run in Github Actions using docker container 
 with image at path Containers.<br>
+<br>
 Here is the image of processed data in parquet format at GCS, ready to be used by others applications.<br>
-![small_gcs](https://github.com/user-attachments/assets/d8fe27fb-8e02-4de1-a12e-d324767385fe)
+![Screenshot 2024-08-13 164035](https://github.com/user-attachments/assets/6889559e-c1de-4a6a-a86c-58777ac7a80a)
   <!--imagem das saidas do projeto(parquet no gcs, tabela do bigquery e gráfico com os dados) -->
 
 
