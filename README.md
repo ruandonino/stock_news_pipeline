@@ -8,7 +8,7 @@ This ETL is a dag in Airflow, the following image is the dag of this pipeline: T
 <br>
  ![small_dag](https://github.com/user-attachments/assets/705c70fa-b713-4551-8927-052631b85e28)
 <br>
- - Checkout_repo - This task is responsible for making a checkout of the repository code to airflow server. After that, the code to be run 
+- Checkout_repo - This task is responsible for making a checkout of the repository code to airflow server. After that, the code to be run 
  in dataproc cluster is copied to Google Cloud Storage.<br>
 - Copy_to_GCS - The code to run in dataproc cluster is copied to google cloud storage.<br>
 - Create_cluster - This task creates a Dataproc cluster configured to run both Pandas and PySpark code. 
