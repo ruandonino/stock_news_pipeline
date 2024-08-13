@@ -23,7 +23,8 @@ This project also has CI/CD automated, with unit tests written using pytest loca
 with image at path Containers.<br>
 <br>
 Here is the image of processed data in parquet format at GCS, ready to be used by others applications.<br>
-![small_gcs](https://github.com/user-attachments/assets/84dd7df2-ac85-4093-933b-df7275a27dfc)
+![small_gcs](https://github.com/user-attachments/assets/54e417be-3204-4642-8ac8-bcb697bf5869)
+
   <!--imagem das saidas do projeto(parquet no gcs, tabela do bigquery e gráfico com os dados) -->
 
 
