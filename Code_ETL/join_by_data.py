@@ -13,7 +13,7 @@ def join_dataframes(list_stocks):
     combined_df = pd.DataFrame()
 
     for stock in list_stocks:
-        parquet_path = f"gs://python_files_stock/outputs_extracted_data/{stock[0]}/{today}/{stock[0]}-{today}"
+        parquet_path = f"gs://python_files_stock2/outputs_extracted_data/{stock[0]}/{today}/{stock[0]}-{today}"
         df_stock = pd.read_parquet(parquet_path)
         df_stock["stock"] = stock[0]
         combined_df = pd.concat([combined_df, df_stock], ignore_index=True)
@@ -106,4 +106,4 @@ if __name__ == "__main__":
     ]
     today = date.today()
     combined_df = join_dataframes(list_stocks)
-    combined_df.to_parquet(f"gs://python_files_stock/outputs_extracted_data/combined_data/combined_data_{today}")
+    combined_df.to_parquet(f"gs://python_files_stock2/outputs_extracted_data/combined_data/combined_data_{today}")
