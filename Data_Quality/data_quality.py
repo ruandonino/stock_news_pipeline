@@ -16,10 +16,7 @@ def create_data_source(df_stock, context):
     data_source = context.data_sources.add_or_update_spark(
         name="stock_data_in_memory",
     )
-    data_asset = data_source.add_dataframe_asset(
-        name="stock_data",
-        dataframe=df_stock
-    )
+    data_asset = data_source.add_dataframe_asset(name="stock_data" , dataframe=df_stock,)
     return data_source,data_asset
 
 def create_expectations(context, batch_request,expectations_suite_name):
