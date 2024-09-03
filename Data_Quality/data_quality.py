@@ -16,7 +16,7 @@ def create_data_source(df_stock, context):
     data_source = context.data_sources.add_or_update_spark(
         name="stock_data_in_memory",
     )
-    data_asset = data_source.add_dataframe_asset(name="stock_data" , dataframe=df_stock,)
+    data_asset = data_source.add_dataframe_asset(name="stock_data")
     return data_source,data_asset
 
 def create_expectations(context, batch_request,expectations_suite_name):
@@ -72,10 +72,13 @@ if __name__ == "__main__":
     context_path = r".\context"
     context = setup_context(context_path)
     data_source, data_asset = create_data_source(df_stock, context)
-    batch_request = data_asset.build_batch_request()
+    batch_request = data_asset.build_batch_request(dataframe=df_stock)
     expectations_suite_name = "data_quality_expectations"
     context, expectations_suite_name = create_expectations(context, batch_request, expectations_suite_name)
     checkpoint_name = "data_quality_checkpoint"
     checkpoint = create_checkpoint(context, expectations_suite_name, checkpoint_name, batch_request)
+    context.add_or_update_checkpoint(checkpoint=checkpoint)
+    checkpoint_result = checkpoint.run()
+    context.build_data_docs()
 
 
