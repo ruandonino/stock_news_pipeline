@@ -103,7 +103,7 @@ if __name__ == "__main__":
         "class_name": "SiteBuilder",
         "site_index_builder": {"class_name": "DefaultSiteIndexBuilder"},
         "store_backend": {
-            "class_name": "TupleFilesystemStoreBackend",
+            "class_name": "TupleGCSStoreBackend",
             "project": "My First Project",
             "bucket": "python_files_stock2",
             "prefix": "outputs_extracted_data/quality_data_{today}",
