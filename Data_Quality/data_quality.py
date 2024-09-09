@@ -92,9 +92,9 @@ if __name__ == "__main__":
     batch_definition = data_asset.add_batch_definition_whole_dataframe(batch_definition_name)
     batch_parameters = {"dataframe": df_stock}
     expectation_suite_name = "data_quality_expectations"
-    expectation_suite = context.suites.get(name=expectation_suite_name)
-    context = create_expectations(context, expectation_suite)
+    context = create_expectations(context, expectation_suite_name)
     validator_name = "data_quality_validator"
+    expectation_suite = context.suites.get(name=expectation_suite_name)
     context = create_validator(context, batch_definition, expectation_suite, validator_name)
     validation_definition = context.validation_definitions.get(validator_name)
     checkpoint_name = "data_quality_checkpoint"
