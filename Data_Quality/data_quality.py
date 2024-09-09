@@ -65,7 +65,7 @@ def create_checkpoint(context, validation_definition, checkpoint_name):
 
     checkpoint = gx.Checkpoint(
         name=checkpoint_name,
-        validation_definitions=validation_definition,
+        validation_definitions=[validation_definition],
         actions=action_list,
         result_format={"result_format": "COMPLETE"},
     )
