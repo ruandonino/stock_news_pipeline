@@ -99,13 +99,14 @@ if __name__ == "__main__":
     validation_definition = context.validation_definitions.get(validator_name)
     checkpoint_name = "data_quality_checkpoint"
     context = create_checkpoint(context, validation_definition, checkpoint_name)
-    base_directory = f"gs://python_files_stock2/outputs_extracted_data/quality_data_{today}"
     site_config = {
         "class_name": "SiteBuilder",
         "site_index_builder": {"class_name": "DefaultSiteIndexBuilder"},
         "store_backend": {
             "class_name": "TupleFilesystemStoreBackend",
-            "base_directory": base_directory,
+            "project": "My First Project",
+            "bucket": "python_files_stock2",
+            "prefix": "outputs_extracted_data/quality_data_{today}",
         },
     }
     site_name = "my_data_docs_site"
