@@ -24,25 +24,25 @@ def transform_df(df_data_stock):
     # Define month abbreviations mapping as an SQL case statement
     month_case_statement = """
             CASE
-                WHEN month = 'jan.' THEN '01'
-                WHEN month = 'fev.' THEN '02'
-                WHEN month = 'mar.' THEN '03'
-                WHEN month = 'abr.' THEN '04'
-                WHEN month = 'mai.' THEN '05'
-                WHEN month = 'jun.' THEN '06'
-                WHEN month = 'jul.' THEN '07'
-                WHEN month = 'ago.' THEN '08'
-                WHEN month = 'set.' THEN '09'
-                WHEN month = 'out.' THEN '10'
-                WHEN month = 'nov.' THEN '11'
-                WHEN month = 'dez.' THEN '12'
+                WHEN month = 'jan' THEN '01'
+                WHEN month = 'fev' THEN '02'
+                WHEN month = 'mar' THEN '03'
+                WHEN month = 'abr' THEN '04'
+                WHEN month = 'mai' THEN '05'
+                WHEN month = 'jun' THEN '06'
+                WHEN month = 'jul' THEN '07'
+                WHEN month = 'ago' THEN '08'
+                WHEN month = 'set' THEN '09'
+                WHEN month = 'out' THEN '10'
+                WHEN month = 'nov' THEN '11'
+                WHEN month = 'dez' THEN '12'
             END
         """
 
     # Extract parts of the date for "9 of Dec. of 2023"
     df_data_stock = df_data_stock.withColumn("Day", regexp_extract(col("date"), r"(\d{1,2}) de \w+\.", 1)) \
         .withColumn("Month", regexp_extract(col("date"), r"\d{1,2} de (\w+)\.", 1)) \
-        .withColumn("Year", regexp_extract(col("date"), r"\d{1,2} de \w+\. de (\d*)", 1))
+        .withColumn("Year", regexp_extract(col("date"), r"\d{1,2} de \w+\. de (\d+)", 1))
     df_data_stock = df_data_stock.withColumn("Year",
                                              when(col("Year") == "", year(current_date())).otherwise(col("Year")))
     # Convert the extracted month to a two-digit format
