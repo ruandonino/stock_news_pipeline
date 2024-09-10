@@ -106,7 +106,7 @@ if __name__ == "__main__":
             "class_name": "TupleGCSStoreBackend",
             "project": "My First Project",
             "bucket": "python_files_stock2",
-            "prefix": "outputs_extracted_data/quality_data_{today}",
+            "prefix": f"data_quality/quality_data_{today}",
         },
     }
     site_name = "my_data_docs_site"
