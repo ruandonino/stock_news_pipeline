@@ -24,18 +24,18 @@ def transform_df(df_data_stock):
     # Define month abbreviations mapping as an SQL case statement
     month_case_statement = """
             CASE
-                WHEN month = 'Jan' THEN '01'
-                WHEN month = 'Fev' THEN '02'
-                WHEN month = 'Mar' THEN '03'
-                WHEN month = 'Abr' THEN '04'
-                WHEN month = 'Mai' THEN '05'
-                WHEN month = 'Jun' THEN '06'
-                WHEN month = 'Jul' THEN '07'
-                WHEN month = 'Ago' THEN '08'
-                WHEN month = 'Set' THEN '09'
-                WHEN month = 'Out' THEN '10'
-                WHEN month = 'Nov' THEN '11'
-                WHEN month = 'Dez' THEN '12'
+                WHEN month = 'jan.' THEN '01'
+                WHEN month = 'fev.' THEN '02'
+                WHEN month = 'mar.' THEN '03'
+                WHEN month = 'abr.' THEN '04'
+                WHEN month = 'mai.' THEN '05'
+                WHEN month = 'jun.' THEN '06'
+                WHEN month = 'jul.' THEN '07'
+                WHEN month = 'ago.' THEN '08'
+                WHEN month = 'set.' THEN '09'
+                WHEN month = 'out.' THEN '10'
+                WHEN month = 'nov.' THEN '11'
+                WHEN month = 'dez.' THEN '12'
             END
         """
 
