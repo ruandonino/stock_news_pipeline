@@ -2,7 +2,7 @@ from pyspark.sql import SparkSession
 import great_expectations as gx
 from great_expectations.checkpoint import Checkpoint
 from great_expectations import expectations as gxe
-from datetime import date
+from datetime import date, datetime
 
 
 def read_df(spark, read_path):
@@ -82,6 +82,7 @@ if __name__ == "__main__":
         .getOrCreate()
 
     today = date.today()
+    current_time = datetime.now()
     read_path = f"gs://python_files_stock2/outputs_processed_data/processed_data_{today}"
     df_stock = read_df(spark, read_path)
     context_path = r".\context"
@@ -108,7 +109,7 @@ if __name__ == "__main__":
             "class_name": "TupleGCSStoreBackend",
             "project": "My First Project",
             "bucket": "python_files_stock2",
-            "prefix": f"data_quality/quality_data_{today}",
+            "prefix": f"data_quality/quality_data_{today}/test_{current_time}",
         },
     }
     site_name = "my_data_docs_site"
