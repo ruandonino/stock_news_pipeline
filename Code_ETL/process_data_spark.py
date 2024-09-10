@@ -40,8 +40,8 @@ def transform_df(df_data_stock):
         """
 
     # Extract parts of the date for "9 of Dec. of 2023"
-    df_data_stock = df_data_stock.withColumn("Day", regexp_extract(col("date"), r"(\d{1,2}) de \w+\. de \d*", 1)) \
-        .withColumn("Month", regexp_extract(col("date"), r"\d{1,2} de (\w+)\. de \d*", 1)) \
+    df_data_stock = df_data_stock.withColumn("Day", regexp_extract(col("date"), r"(\d{1,2}) de \w+\.", 1)) \
+        .withColumn("Month", regexp_extract(col("date"), r"\d{1,2} de (\w+)\.", 1)) \
         .withColumn("Year", regexp_extract(col("date"), r"\d{1,2} de \w+\. de (\d*)", 1))
     df_data_stock = df_data_stock.withColumn("Year",
                                              when(col("Year") == "", year(current_date())).otherwise(col("Year")))
