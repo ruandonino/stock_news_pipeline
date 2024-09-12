@@ -1,3 +1,4 @@
+from great_expectations.exceptions import GreatExpectationsError
 from pyspark.sql import SparkSession
 import great_expectations as gx
 from great_expectations.checkpoint import Checkpoint
@@ -119,4 +120,6 @@ if __name__ == "__main__":
         batch_parameters=batch_parameters
     )
 
+    if not validation_results["success"]:
+        raise GreatExpectationsError(f"Expectation suite '{expectation_suite_name}' failed.")
 

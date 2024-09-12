@@ -51,10 +51,14 @@ def transform_df(df_data_stock):
     # Construct the full date from the extracted parts
     df_data_stock = df_data_stock.withColumn("Full_Date", expr("concat(Year, '-', Month_Num, '-', lpad(Day, 2, '0'))"))
 
-    # Extract the number of days ago from the 'Date' column and handle "yesterday"
     df_data_stock = df_data_stock.withColumn("Days_Ago", when(col("date") == "Ontem", 1)
-                                             .otherwise(
-        regexp_extract(col("date"), r"(\d+) dias atrás", 1).cast("int")))
+                                             .otherwise(regexp_extract(col("date"), r"(\d+) dias atrás", 1).cast("int")))
+    # Extract the number of days ago from the 'Date' column and handle "yesterday and hours ago" cases
+    df_data_stock = df_data_stock.withColumn(
+        "Days_Ago",
+        when(regexp_extract(col("date"), r"(\d+) horas atrás", 1) == "", col("Days_Ago"))
+        .otherwise(0)
+    )
 
     # Calculate the actual date by subtracting the days ago from the current date or using the full date
     df_data_stock = df_data_stock.withColumn("Actual_Date", when(col("Days_Ago").isNotNull(),
@@ -67,6 +71,9 @@ def transform_df(df_data_stock):
     # Drop intermediate columns if not needed
     df_data_stock = df_data_stock.drop("Date", "Days_Ago", "Day", "Month", "Year", "Month_Num", "Full_Date",
                                        "Actual_Date")
+
+    df_data_stock = df_data_stock.dropDuplicates()
+
     return df_data_stock
 def process_data_spark():
     # Initialize a SparkSession
