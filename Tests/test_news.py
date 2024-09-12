@@ -171,7 +171,7 @@ def test_transform_df(spark):
     sample_data = [
         {
             "title": "  Some Title  ",
-            "date": "9 de Dez. de 2023",
+            "date": "9 de dez. de 2023",
             "link": "http://example.com",
             "img": "http://example.com/image.jpg",
             "media": "Media1",
