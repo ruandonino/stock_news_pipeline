@@ -51,8 +51,8 @@ def transform_df(df_data_stock):
     # Construct the full date from the extracted parts
     df_data_stock = df_data_stock.withColumn("Full_Date", expr("concat(Year, '-', Month_Num, '-', lpad(Day, 2, '0'))"))
 
-    # Extract the number of days ago from the 'Date' column and handle "yesterday"
-    df_data_stock = df_data_stock.withColumn("Days_Ago", when(regexp_extract(col("date"), r"(\d+) horas atrás", 1).cast("int"),0))
+    # Extract the number of days ago from the 'Date' column and handle "yesterday and hours ago" cases
+    df_data_stock = df_data_stock.withColumn("Days_Ago", regexp_extract(col("date"), r"(\d+) horas atrás", 0))
 
     df_data_stock = df_data_stock.withColumn("Days_Ago", when(col("date") == "Ontem", 1)
                                              .otherwise(regexp_extract(col("date"), r"(\d+) dias atrás", 1).cast("int")))
