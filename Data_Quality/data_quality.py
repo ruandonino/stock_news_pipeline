@@ -39,9 +39,9 @@ def create_expectations(context, expectations_suite_name):
 
     expectation_regex_link = gx.expectations.ExpectColumnValuesToMatchRegex(column="link", regex=r"https://")
     suite.add_expectation(expectation_regex_link)
-    expectation_regex_image = gx.expectations.ExpectColumnValuesToMatchRegex(column="img", regex=r"https://")
+    expectation_regex_image = gx.expectations.ExpectColumnValuesToMatchRegex(column="img", regex=r"^(http\/\/.*)?$")
     suite.add_expectation(expectation_regex_image)
-    expectation_regex_title = gx.expectations.ExpectColumnValuesToMatchRegex(column="title", regex="\b\w+\b")
+    expectation_regex_title = gx.expectations.ExpectColumnValuesToMatchRegex(column="title", regex="^.+$")
     suite.add_expectation(expectation_regex_title)
     expectation_regex_date = gx.expectations.ExpectColumnValuesToMatchRegex(column="Formatted_Date", regex="\d{1,2}/\d{1,2}/\d{4}")
     suite.add_expectation(expectation_regex_date)
