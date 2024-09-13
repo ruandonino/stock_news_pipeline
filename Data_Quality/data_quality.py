@@ -120,6 +120,6 @@ if __name__ == "__main__":
         batch_parameters=batch_parameters
     )
 
-    if not validation_results["success"]:
+    if not validation_results.success:
         raise GreatExpectationsError(f"Expectation suite '{expectation_suite_name}' failed.")
 
