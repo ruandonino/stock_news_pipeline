@@ -71,7 +71,7 @@ def transform_df(df_data_stock):
     df_data_stock = df_data_stock.drop("Date", "Days_Ago", "Day", "Month", "Year", "Month_Num", "Full_Date",
                                        "Actual_Date")
 
-    df_data_stock = df_data_stock.withColumn('process_date', str(current_date()))
+    df_data_stock = df_data_stock.withColumn('process_date', date_format(current_date(),"dd/MM/yyyy")
     df_data_stock = df_data_stock.dropDuplicates()
 
     return df_data_stock
