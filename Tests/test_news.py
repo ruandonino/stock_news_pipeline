@@ -176,6 +176,7 @@ def test_transform_df(spark):
             "img": "http://example.com/image.jpg",
             "media": "Media1",
             "reporter": "Reporter1",
+            "processed_date": "2023-07-11"
         },
         {
             "title": "  Another Title  ",
@@ -184,6 +185,7 @@ def test_transform_df(spark):
             "img": "http://example.com/image.jpg",
             "media": "Media2",
             "reporter": "Reporter2",
+            "processed_date": "2023-07-11"
         },
         {
             "title": "  Another Title  ",
@@ -192,6 +194,7 @@ def test_transform_df(spark):
             "img": "http://example.com/image.jpg",
             "media": "Media2",
             "reporter": "Reporter2",
+            "processed_date": "2023-07-11"
         },
         {
             "title": "test",
@@ -200,6 +203,7 @@ def test_transform_df(spark):
             "img": "http://example.com/image.jpg",
             "media": "Media3",
             "reporter": "Reporter3",
+            "processed_date": "2023-07-11"
         },
         {
             "title": "",
@@ -208,6 +212,7 @@ def test_transform_df(spark):
             "img": "http://example.com/image.jpg",
             "media": "Media3",
             "reporter": "Reporter3",
+            "processed_date": "2023-07-11"
         }
     ]
     df = spark.createDataFrame(data = sample_data, schema = schema)
