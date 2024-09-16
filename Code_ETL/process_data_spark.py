@@ -1,7 +1,7 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, trim, when
 from datetime import date
-from pyspark.sql.functions import regexp_extract, current_date, date_format, expr, year, current_date
+from pyspark.sql.functions import regexp_extract, current_date, date_format, expr, year, current_date, to_date
 
 def read_df(spark, read_path):
     # Read the Parquet file into a DataFrame
@@ -71,7 +71,7 @@ def transform_df(df_data_stock):
     df_data_stock = df_data_stock.drop("Date", "Days_Ago", "Day", "Month", "Year", "Month_Num", "Full_Date",
                                        "Actual_Date")
 
-    df_data_stock = df_data_stock.withColumn('process_date', date_format(current_date(),"dd/MM/yyyy"))
+    df_data_stock = df_data_stock.withColumn('process_date', current_date())
     df_data_stock = df_data_stock.dropDuplicates()
 
     return df_data_stock
