@@ -221,7 +221,7 @@ def test_transform_df(spark):
     assert result[0].Formatted_Date == datetime.strptime("2023-12-09", "%Y-%m-%d").date()
     assert result[1].Formatted_Date == (datetime.now().date() - timedelta(days=10))
     assert result[2].Formatted_Date == (datetime.now().date())
-    assert result[3].Formatted_Date == (datetime.now().date()- timedelta(days=1)).
+    assert result[3].Formatted_Date == (datetime.now().date()- timedelta(days=1))
     assert len(result) == 4
 
     # Mock the read.parquet method to return the sample DataFrame
