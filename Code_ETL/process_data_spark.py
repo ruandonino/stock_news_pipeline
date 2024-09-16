@@ -48,7 +48,7 @@ def transform_df(df_data_stock):
     df_data_stock = df_data_stock.withColumn("Month_Num", expr(month_case_statement).alias("month_num"))
 
     # Construct the full date from the extracted parts
-    df_data_stock = df_data_stock.withColumn("Full_Date", expr("concat(Year, '-', Month_Num, '-', lpad(Day, 2, '0'))"))
+    df_data_stock = df_data_stock.withColumn("Full_Date", to_date(expr("concat(Year, '-', Month_Num, '-', lpad(Day, 2, '0'))")))
 
     df_data_stock = df_data_stock.withColumn("Days_Ago", when(col("date") == "Ontem", 1)
                                              .otherwise(regexp_extract(col("date"), r"(\d+) dias atrás", 1).cast("int")))
