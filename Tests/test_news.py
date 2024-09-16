@@ -218,10 +218,10 @@ def test_transform_df(spark):
     df = spark.createDataFrame(data = sample_data, schema = schema)
     result = transform_df(df).collect()
     assert result[0].title.strip() == "Some Title"
-    assert result[0].Formatted_Date == "09/12/2023"
-    assert result[1].Formatted_Date == (datetime.now().date() - timedelta(days=10)).strftime("%d/%m/%Y")
-    assert result[2].Formatted_Date == (datetime.now().date()).strftime("%d/%m/%Y")
-    assert result[3].Formatted_Date == (datetime.now().date()- timedelta(days=1)).strftime("%d/%m/%Y")
+    assert result[0].Formatted_Date == "2023-09-12"
+    assert result[1].Formatted_Date == (datetime.now().date() - timedelta(days=10))
+    assert result[2].Formatted_Date == (datetime.now().date())
+    assert result[3].Formatted_Date == (datetime.now().date()- timedelta(days=1))
     assert len(result) == 4
 
     # Mock the read.parquet method to return the sample DataFrame
