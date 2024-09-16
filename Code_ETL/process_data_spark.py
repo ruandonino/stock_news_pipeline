@@ -65,7 +65,7 @@ def transform_df(df_data_stock):
                                              .otherwise(col("Full_Date")))
 
     # Format the actual date to 'dd/MM/yyyy'
-    df_data_stock = df_data_stock.withColumn("Formatted_Date", date_format(col("Actual_Date"), "dd/MM/yyyy"))
+    df_data_stock = df_data_stock.withColumn("Formatted_Date", col("Actual_Date"))
 
     # Drop intermediate columns if not needed
     df_data_stock = df_data_stock.drop("Date", "Days_Ago", "Day", "Month", "Year", "Month_Num", "Full_Date",
