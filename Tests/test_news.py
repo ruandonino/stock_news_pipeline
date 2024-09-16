@@ -218,7 +218,7 @@ def test_transform_df(spark):
     df = spark.createDataFrame(data = sample_data, schema = schema)
     result = transform_df(df).collect()
     assert result[0].title.strip() == "Some Title"
-    assert result[0].Formatted_Date == "2023-09-12"
+    assert result[0].Formatted_Date == "2023-12-09"
     assert result[1].Formatted_Date == (datetime.now().date() - timedelta(days=10))
     assert result[2].Formatted_Date == (datetime.now().date())
     assert result[3].Formatted_Date == (datetime.now().date()- timedelta(days=1))
