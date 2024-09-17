@@ -43,7 +43,7 @@ def create_expectations(context, expectations_suite_name):
     suite.add_expectation(expectation_regex_image)
     expectation_regex_title = gx.expectations.ExpectColumnValuesToMatchRegex(column="title", regex="^.+$")
     suite.add_expectation(expectation_regex_title)
-    expectation_regex_date = gx.expectations.ExpectColumnValuesToMatchRegex(column="Formatted_Date", regex="\d{4}/\d{1,2}/\d{1,2}")
+    expectation_regex_date = gx.expectations.ExpectColumnValuesToMatchRegex(column="Formatted_Date", regex="\d{4}-\d{1,2}-\d{1,2}")
     suite.add_expectation(expectation_regex_date)
 
     return context
